@@ -2,10 +2,12 @@ import matplotlib.pyplot as plt
 
 def plot_gps_l1(data):
     """
-    This function is plotting the Pseudorange,  Dopplerfrequenz and the development of the Signalquality
+    Aufgabe d): Plottet fuer alle GPS-Satelliten (L1 C/A-Signal) den
+    zeitlichen Verlauf von Pseudorange (C1C), Dopplerfrequenz (D1C) und
+    Signalstaerke/SNR (S1C) in drei uebereinanderliegenden Diagrammen.
 
-    :param data:
-    :return:
+    :param data: Beobachtungsdaten (georinex Dataset einer Obs-Datei)
+    :return: None
     """
     # Alle GPS-Satelliten herausfiltern
     satellites = data.sv.to_numpy().astype(str)

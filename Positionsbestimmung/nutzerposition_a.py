@@ -4,12 +4,19 @@ c = 299792458.0  # Lichtgeschwindigkeit in m/s
 
 def berechne_nutzerposition(pr, sat_pos, sat_dt):
     """
-    X psotionsvektor aus dem Erdmittelpunkt
+    Aufgabe a): Loest das nichtlineare Multilaterationsproblem (Abschnitt 4,
+    Gl. 6/7) iterativ mit dem Newton-Verfahren und schaetzt so die
+    ECEF-Nutzerposition sowie den Nutzeruhrenfehler aus einer Menge von
+    Pseudorangemessungen.
 
-    :param pr: PseudoRange
-    :param sat_pos: Satellitenposition
-    :param sat_dt: Uhrenkorrektur
-    :return: Nutzerposition
+    Abbruchkriterium: Die Iteration stoppt, sobald die Positionskorrektur
+    |dx| < 1e-4 m betraegt (Konvergenz), spaetestens jedoch nach 15
+    Iterationsschritten (Sicherheitsgrenze gegen Divergenz).
+
+    :param pr: Array der gemessenen Pseudoranges (m), N Satelliten
+    :param sat_pos: Nx3-Array der Satellitenpositionen im ECEF (m)
+    :param sat_dt: Array der Satellitenuhrenkorrekturen (s), N Werte
+    :return: Geschaetzte Nutzerposition im ECEF (3,) in Metern
     """
     x = np.array([0.0, 0.0, 0.0, 0.0])
 

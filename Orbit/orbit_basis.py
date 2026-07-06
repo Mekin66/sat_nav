@@ -69,16 +69,16 @@ def berechne_orbit_ebene(eph, tk):
 
     e = eph['Eccentricity'].values
 
+    # Kepler-Gleichung iterativ loesen. np.all(...) statt einem Skalarvergleich,
+    # da eph auch mehrere Satelliten gleichzeitig enthalten kann (Aufgabenblock 4/5).
     Ek = Mk
     i = 0
     while i < 10:
         Ek_next = Mk + e * np.sin(Ek)
-        diff = Ek_next - Ek
-        if diff < 0:
-            diff = -diff
-        if diff < 1e-12:
-            break
+        diff = np.abs(Ek_next - Ek)
         Ek = Ek_next
+        if np.all(diff < 1e-12):
+            break
         i = i + 1
 
     nu_k = np.arctan2(np.sqrt(1 - (e * e)) * np.sin(Ek), np.cos(Ek) - e)

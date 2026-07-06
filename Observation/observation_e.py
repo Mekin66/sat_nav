@@ -3,10 +3,13 @@ import numpy as np
 
 def vergleiche_galileo_e1_e5(data):
     """
-    Vergleicht einen Gallileo Satellit der in Beiden Messungen vorkommt
+    Aufgabe e): Waehlt einen Galileo-Satelliten aus und plottet die
+    Differenz der Pseudorange zwischen dem E1-Band (C1C) und dem E5-Band
+    (C5Q), um den Effekt der Frequenzabhaengigkeit (u.a. Ionosphaere) zu
+    veranschaulichen.
 
-    :param data:
-    :return:
+    :param data: Beobachtungsdaten (georinex Dataset einer Obs-Datei)
+    :return: None
     """
     # Einen Galileo-Satelliten finden (z.B. den ersten)
     satellites = data.sv.to_numpy().astype(str)

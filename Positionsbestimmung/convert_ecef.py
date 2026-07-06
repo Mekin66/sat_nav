@@ -2,11 +2,13 @@ import numpy as np
 
 def ecef_to_wgs84(x, y, z):
     """
+    Wandelt eine ECEF-Position mittels der iterationsfreien Naeherung nach
+    Bowring in geografische WGS84-Koordinaten um.
 
-    :param x:
-    :param y:
-    :param z:
-    :return:
+    :param x: ECEF X-Koordinate (m)
+    :param y: ECEF Y-Koordinate (m)
+    :param z: ECEF Z-Koordinate (m)
+    :return: (lat, lon, alt) - Breite und Laenge in Grad, Hoehe in m
     """
     a = 6378137.0
     b = 6356752.314245
@@ -28,10 +30,13 @@ def ecef_to_wgs84(x, y, z):
 
 def ecef_to_enu(pos_array, ref_pos):
     """
-    ECEF zu ENU
-    :param pos_array:
-    :param ref_pos:
-    :return:
+    Transformiert ECEF-Positionen relativ zu einem Referenzpunkt in das
+    lokale Ost-Nord-Oben-Koordinatensystem (East, North, Up).
+
+    :param pos_array: Nx3-Array (oder einzelner 3er-Vektor) der ECEF-Positionen
+    :param ref_pos: ECEF-Position des Referenzpunkts (3,), z.B. die mittlere
+        Position einer statischen Aufzeichnung
+    :return: Nx3-Array der ENU-Koordinaten (Ost, Nord, Oben) in Metern
     """
     lat_ref, lon_ref, _ = ecef_to_wgs84(*ref_pos)
     lat_rad, lon_rad = np.radians(lat_ref), np.radians(lon_ref)

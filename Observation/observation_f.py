@@ -2,9 +2,12 @@ import matplotlib.pyplot as plt
 
 def vergleiche_traegerphase(data):
     """
+    Aufgabe f): Stellt fuer einen GPS-Satelliten die Pseudorange (C1C) und
+    die Traegerphase (L1C) gemeinsam in einem Diagramm mit zwei Y-Achsen
+    dar, um beide Beobachtungsgroessen visuell zu vergleichen.
 
-    :param data:
-    :return:
+    :param data: Beobachtungsdaten (georinex Dataset einer Obs-Datei)
+    :return: None
     """
     # Wir nehmen den ersten GPS Satelliten
     satellites = data.sv.to_numpy().astype(str)
