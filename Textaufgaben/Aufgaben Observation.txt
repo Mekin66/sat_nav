@@ -1,0 +1,11 @@
+Aufgaben Observation
+
+a)
+Genutzte GNSS 			Genutzte Signalbänder
+G	: GPS 			L1 und L5
+R	: Russische GNSS	G1
+C	: Chinesische GNSS	B1C
+E	: Europäische GNSS	E1 und E5
+
+b)
+13 34 34.0000000 - 13:40:14.9995450
