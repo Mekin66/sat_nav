@@ -34,15 +34,17 @@ def main():
 
     :return: None
     """
-    data_stat = gr.load(DATEI_STATISCH)
-    data_dyn = gr.load(DATEI_DYNAMISCH)
-    data_nav = load_nav_data(DATEI_NAV)
+    #Nur notwendige Sateliten laden
+    sets = {'G', 'E','C'}
+    data_stat = gr.load(DATEI_STATISCH, use=sets)
+    data_dyn = gr.load(DATEI_DYNAMISCH, use=sets)
+    data_nav = load_nav_data(DATEI_NAV, sets)
 
     print("\n########## Aufgabenblock 2: Observablen ##########")
-    observation_main.run(data_stat, data_dyn)
+    #observation_main.run(data_stat, data_dyn)
 
     print("\n########## Aufgabenblock 3: Satellitenorbits ##########")
-    orbit_main.run(data_nav)
+    #orbit_main.run(data_nav)
 
     print("\n########## Aufgabenblock 4: Positionsbestimmung ##########")
     ergebnisse_block4 = position_main.run(data_stat, data_dyn, data_nav)

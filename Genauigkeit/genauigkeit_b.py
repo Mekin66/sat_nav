@@ -4,8 +4,8 @@ import numpy as np
 def vergleiche_statistik(pos_block4, pos_block5):
     """
     Aufgabe b): Vergleicht fuer die statische Messung Mittelwert und Varianz
-    der Positionsschaetzungen aus Abschnitt 4 (nur C1C) und Abschnitt 5
-    (ionosphaerenfrei korrigiert).
+    der Positionsschaetzungen aus Abschnitt 4 (nur GPS, C1C) und Abschnitt 5
+    (GPS + Galileo, Mehrsystem-Loesung mit ISB).
 
     :param pos_block4: Nx3 ECEF-Positionen der statischen Messung, Abschnitt 4
     :param pos_block5: Mx3 ECEF-Positionen der statischen Messung, Abschnitt 5
@@ -29,6 +29,6 @@ def vergleiche_statistik(pos_block4, pos_block5):
     print(f"Summierte Varianz Abschnitt 5: {gesamtvarianz_5:.4f} m^2")
 
     if gesamtvarianz_5 < gesamtvarianz_4:
-        print("-> Die ionosphaerenfreie Korrektur verringert die Streuung der Positionsschaetzung.")
+        print("-> Die zusaetzlichen Satellitensysteme verringern die Streuung der Positionsschaetzung.")
     else:
-        print("-> Die ionosphaerenfreie Korrektur verringert die Streuung in diesem Datensatz nicht merklich.")
+        print("-> Die zusaetzlichen Satellitensysteme verringern die Streuung in diesem Datensatz nicht merklich.")

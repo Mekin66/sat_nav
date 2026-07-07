@@ -10,7 +10,7 @@ F = -4.442807633e-10
 SEC_PER_WEEK = 604800
 
 
-def load_data(pfad):
+def load_data(pfad, sets):
     """
     Laedt die Navigationsdatei aus dem angegebenen Pfad ein.
 
@@ -19,7 +19,7 @@ def load_data(pfad):
     """
     print("lese_satelliten_aus")
     kompletter_pfad = Path(pfad)
-    data = gr.load(kompletter_pfad)
+    data = gr.load(kompletter_pfad, use=sets)
     return data
 
 

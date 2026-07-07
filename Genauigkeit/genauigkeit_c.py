@@ -6,8 +6,8 @@ from Positionsbestimmung.convert_ecef import ecef_to_wgs84
 def vergleiche_dynamisch(pos_block4, pos_block5, dateiname="vergleich_dynamische_trajektorie.html"):
     """
     Aufgabe c): Stellt die dynamischen Trajektorien aus Abschnitt 4 (nur
-    C1C) und Abschnitt 5 (ionosphaerenfrei korrigiert) gemeinsam auf einer
-    Karte dar, um sie optisch zu vergleichen.
+    GPS, C1C) und Abschnitt 5 (GPS + Galileo, Mehrsystem-Loesung) gemeinsam
+    auf einer Karte dar, um sie optisch zu vergleichen.
 
     :param pos_block4: Nx3 ECEF-Positionen der dynamischen Messung, Abschnitt 4
     :param pos_block5: Mx3 ECEF-Positionen der dynamischen Messung, Abschnitt 5
@@ -26,10 +26,10 @@ def vergleiche_dynamisch(pos_block4, pos_block5, dateiname="vergleich_dynamische
 
     if wgs84_4:
         folium.PolyLine(wgs84_4, color="blue", weight=3, opacity=0.8,
-                         tooltip="Abschnitt 4 (C1C)").add_to(m)
+                         tooltip="Abschnitt 4 (nur GPS)").add_to(m)
     if wgs84_5:
         folium.PolyLine(wgs84_5, color="red", weight=3, opacity=0.8,
-                         tooltip="Abschnitt 5 (ionosphaerenfrei)").add_to(m)
+                         tooltip="Abschnitt 5 (GPS + Galileo + BEIdou)").add_to(m)
 
     m.save(dateiname)
     print(f"Aufgabe c) Vergleichskarte gespeichert als '{dateiname}'.")
