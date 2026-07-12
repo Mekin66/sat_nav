@@ -67,8 +67,6 @@ def berechne_trajektorie(data_obs, data_nav, pseudorange_fn=None, min_satelliten
         else:
             pr_epoche = epoche['C1C'].values
 
-        # Nur Satelliten beruecksichtigen, die sowohl eine gueltige
-        # Pseudorange als auch Navigationsdaten besitzen.
         sichtbare_svs = [
             sv for sv, pr in zip(gps_svs, pr_epoche)
             if not np.isnan(pr) and str(sv) in nav_je_sv
@@ -87,7 +85,7 @@ def berechne_trajektorie(data_obs, data_nav, pseudorange_fn=None, min_satelliten
             eph = nav_je_sv[str(sv)].sel(time=t, method='nearest')
             laufzeit_s = pr_gueltig[i] / c
             laufzeit_td = (laufzeit_s * 1e9).astype('timedelta64[ns]')
-            x, y, z, dt_sat = berechne_ecef_und_uhr(eph, t-laufzeit_td)
+            x, y, z, dt_sat = berechne_ecef_und_uhr(eph, t - laufzeit_td)
 
             theta = OMEGA_E_DOT * laufzeit_s
             x_korr = x * np.cos(theta) + y * np.sin(theta)

@@ -1,6 +1,7 @@
-from Genauigkeit.mehrsysteme import berechne_trajektorie_mehrsysteme, SYSTEME
+from Genauigkeit.mehrsysteme import berechne_trajektorie_mehrsysteme, SYSTEME, glaette_trajektorie
 from Genauigkeit.genauigkeit_b import vergleiche_statistik
 from Genauigkeit.genauigkeit_c import vergleiche_dynamisch
+from Positionsbestimmung.trajektorie import karte_erstellen
 
 
 def run(data_stat, data_dyn, data_nav, ergebnisse_block4):
@@ -34,6 +35,14 @@ def run(data_stat, data_dyn, data_nav, ergebnisse_block4):
 
     print("\n=== Aufgabe c: Vergleich dynamische Messung ===")
     vergleiche_dynamisch(ergebnisse_block4["pos_dyn"], pos_dyn_5)
+
+    print("\n=== Zusatz: Geglaettete Mehrsystem-Trajektorie (dynamisch) ===")
+    pos_dyn_5_geglaettet = glaette_trajektorie(pos_dyn_5)
+    karte_erstellen(pos_dyn_5_geglaettet, "dynamische_trajektorie_mehrsysteme_geglaettet.html")
+
+    print("\n=== Zusatz: Geglaettete Mehrsystem-Trajektorie (statisch) ===")
+    pos_dyn_5_geglaettet = glaette_trajektorie(pos_stat_5)
+    karte_erstellen(pos_dyn_5_geglaettet, "statische_trajektorie_mehrsysteme_geglaettet.html")
 
     return {
         "pos_stat": pos_stat_5,
