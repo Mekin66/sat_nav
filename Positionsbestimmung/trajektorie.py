@@ -1,6 +1,7 @@
 import numpy as np
 import folium
 
+from Orbit.orbit_basis import OMEGA_E_DOT
 from Orbit.orbit_d import berechne_ecef_und_uhr
 from Positionsbestimmung.nutzerposition_a import berechne_nutzerposition, c
 from Positionsbestimmung.convert_ecef import ecef_to_wgs84
@@ -87,7 +88,11 @@ def berechne_trajektorie(data_obs, data_nav, pseudorange_fn=None, min_satelliten
             laufzeit_s = pr_gueltig[i] / c
             laufzeit_td = (laufzeit_s * 1e9).astype('timedelta64[ns]')
             x, y, z, dt_sat = berechne_ecef_und_uhr(eph, t-laufzeit_td)
-            sat_pos[i] = (x, y, z)
+
+            theta = OMEGA_E_DOT * laufzeit_s
+            x_korr = x * np.cos(theta) + y * np.sin(theta)
+            y_korr = -x * np.sin(theta) + y * np.cos(theta)
+            sat_pos[i] = (x_korr, y_korr, z)
             sat_dt[i] = dt_sat
 
         pos_ecef = berechne_nutzerposition(pr_gueltig, sat_pos, sat_dt)

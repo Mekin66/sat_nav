@@ -1,6 +1,7 @@
 import numpy as np
 from pandas.core.dtypes import astype
 
+from Orbit.orbit_basis import OMEGA_E_DOT
 from Orbit.orbit_g import berechne_eci
 
 c = 299792458.0  # Lichtgeschwindigkeit in m/s
@@ -167,10 +168,8 @@ def berechne_trajektorie_mehrsysteme(data_obs, data_nav, systeme=SYSTEME, min_sa
 
         pos_eci = berechne_nutzerposition_mehrsysteme(pr_gueltig, sat_pos, sat_dt, system_ids)
 
-        omega_e = 7.2921151467e-5
-        t_start = (t - np.datetime64('1980-01-06T00:00:00').astype('timedelta64[ns]')).astype('int64')  %604800000000000
-
-        theta = omega_e * t_start/1e9
+        t_start = (t - np.datetime64('1980-01-06T00:00:00')).astype('timedelta64[ns]').astype('int64') % 604800000000000
+        theta = OMEGA_E_DOT * t_start/1e9
 
         rot_mat_z = np.array([
             [np.cos(theta), np.sin(theta),0],
