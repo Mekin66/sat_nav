@@ -1,4 +1,7 @@
 import numpy as np
+from pandas.core.dtypes import astype
+
+from Orbit.orbit_g import berechne_eci
 
 c = 299792458.0  # Lichtgeschwindigkeit in m/s
 
@@ -154,13 +157,27 @@ def berechne_trajektorie_mehrsysteme(data_obs, data_nav, systeme=SYSTEME, min_sa
         system_ids = np.zeros(len(sichtbare_svs), dtype=int)
         for i, sv in enumerate(sichtbare_svs):
             eph = nav_je_sv[str(sv)].sel(time=t, method='nearest')
-            x, y, z, dt_sat = berechne_ecef_und_uhr(eph, t)
+            laufzeit_s = pr_gueltig[i] / c
+            laufzeit_td = (laufzeit_s * 1e9).astype('timedelta64[ns]')
+            _, _, _, dt_sat = berechne_ecef_und_uhr(eph, t-laufzeit_td)
+            x, y, z = berechne_eci(eph, t-laufzeit_td)
             sat_pos[i] = (x, y, z)
             sat_dt[i] = dt_sat
             system_ids[i] = system_index[str(sv)[0]]
 
-        pos_ecef = berechne_nutzerposition_mehrsysteme(pr_gueltig, sat_pos, sat_dt, system_ids)
+        pos_eci = berechne_nutzerposition_mehrsysteme(pr_gueltig, sat_pos, sat_dt, system_ids)
 
+        omega_e = 7.2921151467e-5
+        t_start = (t - np.datetime64('1980-01-06T00:00:00').astype('timedelta64[ns]')).astype('int64')  %604800000000000
+
+        theta = omega_e * t_start/1e9
+
+        rot_mat_z = np.array([
+            [np.cos(theta), np.sin(theta),0],
+            [-np.sin(theta), np.cos(theta), 0],
+            [0, 0, 1]
+        ])
+        pos_ecef = rot_mat_z @ pos_eci
         positionen.append(pos_ecef)
         zeiten.append(t)
 
