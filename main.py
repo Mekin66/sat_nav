@@ -35,7 +35,7 @@ def main():
     :return: None
     """
     #Nur notwendige Sateliten laden
-    sets = {'G', 'E','C'}
+    sets = {'G', 'E'}
     data_stat = gr.load(DATEI_STATISCH, use=sets)
     data_dyn = gr.load(DATEI_DYNAMISCH, use=sets)
     data_nav = load_nav_data(DATEI_NAV, sets)

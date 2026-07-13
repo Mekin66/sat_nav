@@ -14,7 +14,7 @@ c = 299792458.0  # Lichtgeschwindigkeit in m/s
 # wird dieser Offset unten vor der Bahnberechnung fuer 'C'-Satelliten
 # herausgerechnet. GLONASS ('R') wird weiterhin nicht beruecksichtigt, da
 # es seine Ephemeriden in einem anderen (kartesischen) Format ueberraegt.
-SYSTEME = ('G', 'E')
+SYSTEME = ('G', 'E', 'C')
 mapping = {'G':'C1C','E':'C1C','C':'C1P'}
 
 # GPST liegt konstant 14s vor BDT (BeiDou Time) - siehe ICD-BDS.
@@ -35,6 +35,7 @@ def _gueltige_nav_daten(data_nav, svs):
     for sv in svs:
         sv_name = str(sv)
         sat_nav = data_nav.sel(sv=sv_name)
+        print(f"{sv_name} ausgelesen")
         gueltig = ~np.isnan(sat_nav['Toe'].values)
         if gueltig.any():
             nav_je_sv[sv_name] = sat_nav.isel(time=gueltig)
