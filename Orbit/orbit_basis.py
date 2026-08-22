@@ -15,6 +15,7 @@ def load_data(pfad, sets):
     Laedt die Navigationsdatei aus dem angegebenen Pfad ein.
 
     :param pfad: String oder Pfad-Objekt zur Navigationsdatei
+    :param sets: Definiert die Satelliten, die ausgelesen werden sollen
     :return: Dataset mit den Navigationsdaten
     """
     print("lese_satelliten_aus")
